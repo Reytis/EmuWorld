@@ -6,7 +6,7 @@ const app = express();
 const PORT = 3000;
 const API_KEY = 'pp64muquz7qralwxkppswl49qiu8ym'; // clé API IGDB
 const API_ID = '7yuofk3njbfja2pl950sfu2sxiqoqf'; // client ID
-const BASE_URL = 'https://api.igdb.com/v4/games'; // url to ask
+const BASE_URL = 'https://api.igdb.com/v4/'; // url to ask
 
 app.use(cors()) //For bypass the CORS policy
 
@@ -19,8 +19,56 @@ app.use((req, res, next) => {
 });
 
 //Send the request
-app.use('/api', createProxyMiddleware({
-    target: BASE_URL,
+app.use('/api/games', createProxyMiddleware({
+    target: BASE_URL+'games',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/api': '',
+    },
+    onProxyReq: (proxyReq, req, res) => {
+        proxyReq.setHeader('Client-ID', API_ID);
+        proxyReq.setHeader('Authorization', `Bearer ${API_KEY}`);
+    }
+}))
+//Send the request
+app.use('/api/genres', createProxyMiddleware({
+    target: BASE_URL+'genres',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/api': '',
+    },
+    onProxyReq: (proxyReq, req, res) => {
+        proxyReq.setHeader('Client-ID', API_ID);
+        proxyReq.setHeader('Authorization', `Bearer ${API_KEY}`);
+    }
+}))
+//Send the request
+app.use('/api/editors', createProxyMiddleware({
+    target: BASE_URL+'involved_companies',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/api': '',
+    },
+    onProxyReq: (proxyReq, req, res) => {
+        proxyReq.setHeader('Client-ID', API_ID);
+        proxyReq.setHeader('Authorization', `Bearer ${API_KEY}`);
+    }
+}))
+//Send the request
+app.use('/api/company', createProxyMiddleware({
+    target: BASE_URL+'companies',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/api': '',
+    },
+    onProxyReq: (proxyReq, req, res) => {
+        proxyReq.setHeader('Client-ID', API_ID);
+        proxyReq.setHeader('Authorization', `Bearer ${API_KEY}`);
+    }
+}))
+//Send the request
+app.use('/api/release', createProxyMiddleware({
+    target: BASE_URL+'release_dates',
     changeOrigin: true,
     pathRewrite: {
         '^/api': '',

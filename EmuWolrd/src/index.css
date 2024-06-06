@@ -67,22 +67,33 @@ button:focus-visible {
 .game_container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px;
 }
 
 .game_cell {
-  flex: 1 1 200px; 
-  min-width: 200px; 
-  min-height: 200px;
-  min-width: 230px;
+  flex: 1 1 160px; 
+  min-width: 160px; 
+  min-height: 160px;
   aspect-ratio: 1/1;
+  padding-top: 0;
 }
 
 .game_cell img {
-  width: 70%;
-  height: 60%;
+  width: 90%;
+  height: 85%;
   aspect-ratio: 1/1;
+}
+h2 {
+  margin: 0;
+  font-size: 14px;
+}
+.game_datas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 4px 2px;
 }
 
 ul {
@@ -96,4 +107,7 @@ li {
 
 .cta {
   margin: 8px;
+}
+.icons {
+  fill: var(--text)
 }
