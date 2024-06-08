@@ -1,19 +1,10 @@
 import { useState, useEffect } from 'react';
 import { clearGameFileName, getCompleteGameInfo, truncateText } from '../functions';
 import { Star } from '@/Icons';
+import { GameInfo } from '@/types';
 
 interface GameComponentProps {
   gameName: string;
-}
-
-interface GameInfo {
-  id: number,
-  cover: {id: number, url: string}, //cover of game
-  name: string, //name of game
-  editors: string[], //array of studio name
-  release: number, //Date type 2016
-  genres: string[], // list of genre
-  rating: number // <10 convert base 80/100 to 8/10
 }
 
 export const GameCell = ({gameName}:GameComponentProps) => {
@@ -96,7 +87,7 @@ export const GameCellList = ({gameName}:GameComponentProps) => {
   return (
     <div title={gameInfo ? gameInfo.name : clearGameFileName(gameName)}>
       {gameInfo ? (
-        <div>
+        <div className='game_datas_container'>
           {gameInfo.cover && <img src={`https:${gameInfo.cover.url.replace('t_thumb', 't_720p')}`} alt={gameInfo.name} width="150px" height="150px" style={{objectFit: "cover"}}
           /> // display datas
           } 
@@ -104,17 +95,21 @@ export const GameCellList = ({gameName}:GameComponentProps) => {
           /> // handle UI for missing img if game found without
           }
           <div className="game_datas">
-            <h2>{truncateText(gameInfo.name, 12)}</h2>
-            <Star />  
+            <h2>{gameInfo.name} <Star /></h2>
+            <span className="years">Years: {gameInfo.release}</span>
+            <span className="editors">Editors: {gameInfo.editors.map(e => e +', ')}</span>
+            <span className="rating">Rating: {gameInfo.rating}/10</span>
           </div>
         </div>
       ) : (
         // Handle not found game UI
-        <div>
+        <div className='game_datas_container'>
           <img src="./ImgNotFound.png" alt={clearGameFileName(gameName)} width="150px" height="150px" style={{objectFit: "cover"}} />
           <div className="game_datas">
-            <h2>{truncateText(clearGameFileName(gameName), 12)}</h2>
-            <Star />  
+            <h2>{clearGameFileName(gameName)} <Star /></h2>
+            <span className="years">Years: unknow</span>
+            <span className="editors">Editors: unknow</span>
+            <span className="rating">Rating: null/10</span> 
           </div>
         </div>
       )}
