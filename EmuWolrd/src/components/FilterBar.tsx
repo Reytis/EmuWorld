@@ -1,5 +1,5 @@
-import { Grid, List } from "@/Icons"
-import { Checkbox, FilterInput, SearchBar, Switch } from "./Inputs"
+import { Grid, List, Search } from "@/Icons"
+import { Checkbox, FilterInput, Switch, TextInput } from "./Inputs"
 
 export const FilterBar = () => {
 
@@ -9,7 +9,7 @@ export const FilterBar = () => {
             <FilterInput options={["NDS", "3DS", "Wii", "Switch"]} type={"Console"} />
             <FilterInput options={["Action", "2D", "3D", "RPG"]} type={"Genre"} />
             <Checkbox label={"Only Favoris"} />
-            <SearchBar />
+            <TextInput placeHolder={'Search'}><Search /></TextInput>
         </div>
         <Switch options={[<Grid />, <List />]} />
     </div>

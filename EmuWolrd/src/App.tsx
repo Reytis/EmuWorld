@@ -4,9 +4,9 @@ import { Menu } from './components/Menu';
 import { GameLibrary } from './components/GameLibrary';
 import { FilterBar } from './components/FilterBar';
 import { GameEditor } from './components/GameEditor';
-import { Checkbox, FilterInput, Opener, SearchBar, Switch } from './components/Inputs';
+import { Checkbox, FilterInput, Opener, Switch, TextInput } from './components/Inputs';
 import { CTA } from './components/CTA';
-import { BookShelf, Burger, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Cross, Edit, Grid, Home, List, Manette, Open, Remove, Search, Settings, Star } from './Icons';
+import { BookShelf, Burger, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Cross, Edit, Grid, Home, Img, List, Manette, Open, Remove, Reset, Search, Settings, Star } from './Icons';
 import { Console } from './components/Console';
 
 declare global {
@@ -146,13 +146,18 @@ function App() {
     </div>
     <div>
       <h1>Console Cell</h1>
-      <Console />
+      <div className="console_container">
+        <Console name='Nintendo Switch' pictures='Switch' />
+        <Console name='Nintendo DS' pictures='DS' />
+        <Console name='Wii' pictures='Wii' />
+      </div>
     </div>
     <div className="inputs_container">
       <h1>Inputs</h1>
       <FilterInput type='Options' options={["Option 1", "Option 2", "Option 3", "Option 4"]} />
       <Checkbox  label='Checkbox'/>
-      <SearchBar />
+      <TextInput placeHolder={'Search'}><Search /></TextInput>
+      <TextInput placeHolder={'Name'} label='Name'><CTA><Cross /></CTA></TextInput>
       <Switch options={[<Grid />, <List />]} />
       {/* <Opener /> */}
     </div>
@@ -184,6 +189,8 @@ function App() {
         <Remove />
         <Search />
         <Settings />
+        <Reset />
+        <Img />
       </div>      
     </div>
   </div>

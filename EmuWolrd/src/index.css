@@ -59,6 +59,9 @@ button:hover {
   border-color: var(--text);
   background: var(--bg-light);
 }
+button:focus {
+  appearance: none;
+}
 
 .cta {
   margin: 8px;
@@ -96,6 +99,7 @@ button:hover {
 }
 
 .game_cell img {
+  max-width: 230px;
   width: 90%;
   height: 85%;
   aspect-ratio: 1/1;
@@ -203,7 +207,7 @@ span {
   margin: 4px;
 }
 
-.search_bar {
+.text_input {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -215,16 +219,26 @@ span {
   border: 2px solid var(--text);
   transition: all .15s ease;
 }
-.search_input {
+.text_input .cta {
+  margin: 0;
+  padding: 2px;
+  max-width: 32px;
+  aspect-ratio: 1/1;
+}
+.text_input .cta:hover {
+  border: 2px solid transparent;
+}
+.input_text {
+  width: 100%;
   background: var(--bg-light);
   border: none;
   color: var(--text);
   padding: 4px;
 }
-.search_input:focus {
+.input_text:focus {
   outline: none;
 }
-.search_bar:focus-within {
+.text_input:focus-within {
   border: 2px solid var(--primary-light)
 }
 ::placeholder {
@@ -232,7 +246,7 @@ span {
   font-size: 16px;
   color: var(--text-dark);
 }
-.search_bar .icons {
+.text_input .icons {
   width: 24px;
   height: 24px;
 }
@@ -404,11 +418,112 @@ input[type="checkbox"]:checked::before {
 
 .filter_bar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 .filters {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 16px;
+}
+
+
+.console {
+  flex: 1 1 250px; 
+  min-width: 250px;
+  min-height: 250px;
+}
+.console img {
+  width: 90%;
+  height: 90%;
+  aspect-ratio: 1/1;
+}
+
+.console_container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 0;
+  width: fit-content;
+  min-width: 20px;
+  background: var(--bg-light);
+  transition: all .15s ease;
+}
+.menu:hover {
+  min-width: 350px;
+  width: 20vw;
+}
+.menu li > * {
+  margin: 0;
+  padding: 12px 20px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+}
+.menu li .cta .icons {
+  width: 32px;
+  height: 32px;
+}
+.menu li .cta {
+  justify-content: left;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-dark);
+  border-radius: 16px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.game_editor .editions .cta {
+  width: 100%;
+  margin: 0;
+}
+.game_editor .editions, .game_editor .preview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+.editions_note_years {
+  display: flex;
+  gap: 8px;
+}
+.editions_note_years > * {
+  width: 100%;
+}
+
+.container_preview {
+  display: flex;
+  justify-content: space-around;
+}
+.multiple_data {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.game_editor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 16px;
 }

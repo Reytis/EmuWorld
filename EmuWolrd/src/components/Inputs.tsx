@@ -18,7 +18,6 @@ export const FilterInput = ({options, type}: FilterInputProps) => {
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-        console.log(event)
         if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
           setShowOpt(false);
         }
@@ -68,11 +67,19 @@ export const Checkbox = ({label}: checkboxProps) => {
     </div>
 }
 
-export const SearchBar = () => {
+type textInputProps = {
+    children: children,
+    placeHolder: string,
+    label?: string
+}
+export const TextInput = ({children, placeHolder, label}: textInputProps) => {
 
-    return <div className="search_bar">
-        <input type="text" className="search_input" placeholder="Search" />
-        <Search />
+    return <div>
+        {label && <label>{label}</label>}
+        <div className="text_input">
+            <input type="text" className="input_text" placeholder={placeHolder} />
+            {children}
+        </div>
     </div>
 }   
 
