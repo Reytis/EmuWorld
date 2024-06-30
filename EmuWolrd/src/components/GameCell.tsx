@@ -35,10 +35,10 @@ export const GameCell = ({gameName}:GameComponentProps) => {
     <div title={gameInfo ? gameInfo.name : clearGameFileName(gameName)}>
       {gameInfo ? (
         <div>
-          {gameInfo.cover && <img src={`https:${gameInfo.cover.url.replace('t_thumb', 't_720p')}`} alt={gameInfo.name} width="150px" height="150px" style={{objectFit: "cover"}}
+          {gameInfo.cover && <img src={`https:${gameInfo.cover.url.replace('t_thumb', 't_720p')}`} alt={gameInfo.name} width="150px" height="150px"
           /> // display datas
           } 
-          {!gameInfo.cover && <img src={"./ImgNotFound.png"} alt={gameInfo.name} width="150px" height="150px" style={{objectFit: "cover"}}
+          {!gameInfo.cover && <img src={"./ImgNotFound.png"} alt={gameInfo.name} width="150px" height="150px"
           /> // handle UI for missing img if game found without
           }
           <div className="game_datas">
@@ -51,7 +51,7 @@ export const GameCell = ({gameName}:GameComponentProps) => {
         <div>
           <img src="./ImgNotFound.png" alt={clearGameFileName(gameName)} width="150px" height="150px" style={{objectFit: "cover"}} />
           <div className="game_datas">
-            <h2>{truncateText(clearGameFileName(gameName), 12)}</h2>
+            <h2>{truncateText(clearGameFileName(gameName), 16)}</h2>
             <Star />  
           </div>
         </div>
@@ -98,18 +98,18 @@ export const GameCellList = ({gameName}:GameComponentProps) => {
             <h2>{gameInfo.name} <Star /></h2>
             <span className="years">Years: {gameInfo.release}</span>
             <span className="editors">Editors: {gameInfo.editors.map(e => e +', ')}</span>
-            <span className="rating">Rating: {gameInfo.rating}/10</span>
+            <span className="rating">Rating: {Math.round(gameInfo.rating * 10) /10 }/10</span>
           </div>
         </div>
       ) : (
         // Handle not found game UI
         <div className='game_datas_container'>
-          <img src="./ImgNotFound.png" alt={clearGameFileName(gameName)} width="150px" height="150px" style={{objectFit: "cover"}} />
+          <img src="./ImgNotFound.png" alt={clearGameFileName(gameName)} width="150px" height="150px" />
           <div className="game_datas">
             <h2>{clearGameFileName(gameName)} <Star /></h2>
             <span className="years">Years: unknow</span>
             <span className="editors">Editors: unknow</span>
-            <span className="rating">Rating: null/10</span> 
+            <span className="rating">Rating: 0/10</span> 
           </div>
         </div>
       )}

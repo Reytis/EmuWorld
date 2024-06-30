@@ -2,15 +2,19 @@ import { BookShelf, Cross, Home, Manette, Settings } from "@/Icons"
 import { CTA } from "./CTA"
 import { useState } from "react"
 
-export const Menu = () => {
+type menuProps = {
+    current: number,
+    changeCurrent: (n:number) => void
+}
+
+export const Menu = ({current, changeCurrent}: menuProps) => {
     const [isOpen, setOpen] = useState(false)
-    const [selected, setSelected] = useState(0)
 
     return <ul className="menu" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-        <li><CTA noBorder onClick={() => setSelected(0)} selected={selected === 0 ? true : false}><Home /> {isOpen ? 'Home' : ''}</CTA></li>
-        <li><CTA noBorder onClick={() => setSelected(1)} selected={selected === 1 ? true : false}><Manette /> {isOpen ? 'Controls' : ''}</CTA></li>
-        <li><CTA noBorder onClick={() => setSelected(2)} selected={selected === 2 ? true : false}><BookShelf /> {isOpen ? 'Library' : ''}</CTA></li>
-        <li><CTA noBorder onClick={() => setSelected(3)} selected={selected === 3 ? true : false}><Cross /> {isOpen ? 'Add' : ''}</CTA></li>
-        <li><CTA noBorder onClick={() => setSelected(4)} selected={selected === 4 ? true : false}><Settings /> {isOpen ? 'Settings' : ''}</CTA></li>
+        <li><CTA noBorder onClick={() => changeCurrent(0)} selected={current === 0}><Home /> {isOpen ? 'Home' : ''}</CTA></li>
+        <li><CTA noBorder onClick={() => changeCurrent(1)} selected={current === 1}><Manette /> {isOpen ? 'Controls' : ''}</CTA></li>
+        <li><CTA noBorder onClick={() => changeCurrent(2)} selected={current === 2}><BookShelf /> {isOpen ? 'Library' : ''}</CTA></li>
+        <li><CTA noBorder onClick={() => changeCurrent(3)} selected={current === 3}><Cross /> {isOpen ? 'Add' : ''}</CTA></li>
+        <li><CTA noBorder onClick={() => changeCurrent(4)} selected={current === 4}><Settings /> {isOpen ? 'Settings' : ''}</CTA></li>
     </ul>
 }

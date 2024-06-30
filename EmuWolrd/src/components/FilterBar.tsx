@@ -11,6 +11,6 @@ export const FilterBar = () => {
             <Checkbox label={"Only Favoris"} />
             <TextInput placeHolder={'Search'}><Search /></TextInput>
         </div>
-        <Switch options={[<Grid />, <List />]} />
+        <Switch options={[<Grid />, <List />]} current={0}/>
     </div>
 }
