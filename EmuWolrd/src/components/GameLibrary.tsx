@@ -5,12 +5,7 @@ import { GameCell, GameCellList } from "./GameCell"
 export const GameLibrary = () => {
     const [directories, setDirectories] = useState<string[]>([]);
     const [files, setFiles] = useState<{ [key: string]: string[] }>({});
-    const [filterState, setFilterState] = useState({
-        console: "all",
-        genre: "all",
-        favorites: false,
-        view: "grid"
-    })
+    const [view, setView] = useState(0)
 
     // directory to display 
     useEffect(() => {
@@ -46,14 +41,14 @@ export const GameLibrary = () => {
     };
 
     return <div className="game_library">
-        <FilterBar />
-        <div className={filterState.view === 'grid' ? 'game_container' : 'game_container_list'}>
+        <FilterBar viewDisplayed={view} onViewChange={setView} />
+        <div className={view === 0 ? 'game_container' : 'game_container_list'}>
             {directories.map((dir) => (
                 files[dir]
                 ?.filter((file) => !file.endsWith('.sav'))// make sure file is a game not a save if saves file are in same folder
                 .map((file, index) => (
-                    <button className={filterState.view === 'grid' ? 'game_cell' : 'game_cell_list'} key={index} onClick={() => handleOpenFile(`${dir}/${file}`)}>
-                    {filterState.view === 'grid' ? <GameCell gameName={file} /> : <GameCellList gameName={file} />}
+                    <button className={view === 0 ? 'game_cell' : 'game_cell_list'} key={index} onClick={() => handleOpenFile(`${dir}/${file}`)}>
+                    {view === 0 ? <GameCell gameName={file} /> : <GameCellList gameName={file} />}
                     </button>
                 ))           
             ))}

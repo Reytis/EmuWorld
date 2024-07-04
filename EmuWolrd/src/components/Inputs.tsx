@@ -85,13 +85,19 @@ export const TextInput = ({children, placeHolder, label}: textInputProps) => {
 
 type SwitchProps = {
     options: ReactElement[],
-    current: number
+    current: number,
+    onClick: Function
 }
-export const Switch = ({options, current}: SwitchProps) => {
+export const Switch = ({options, current, onClick}: SwitchProps) => {
     const [selected, setSelected] = useState(current)
 
+    const handleClick = (o: ReactElement) => {
+        setSelected(options.indexOf(o))
+        onClick(options.indexOf(o))
+    }
+
     return <div className="switch">
-        {options.map((o) => <div className={`switch_options ${o === options[selected] ? "selected" : ""}`} onClick={() => setSelected(options.indexOf(o))}>{o}</div>)}
+        {options.map((o) => <div className={`switch_options ${o === options[selected] ? "selected" : ""}`} onClick={() => handleClick(o)}>{o}</div>)}
     </div>
 }
 

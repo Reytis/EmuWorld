@@ -55,6 +55,23 @@ export async function getGameGenre(genres: number[]) {
     
     const data = await response.json();
 
+    // Get current genres from localStorage
+    let storedGenres = localStorage.getItem('genres');
+    let currentGenres = storedGenres ? JSON.parse(storedGenres) : [];
+
+    // Extract names of the genres from the fetched data
+    const newGenres = data.map((genre: {id: number, name: string; }) => genre.name);
+
+    // Add new genres to currentGenres if they are not already present
+    newGenres.forEach((genre: string) => {
+        if (!currentGenres.includes(genre)) {
+            currentGenres.push(genre);
+        }
+    });
+
+    // Update the localStorage with the new list
+    localStorage.setItem('genres', JSON.stringify(currentGenres));
+
     return data;
 }
 export async function getGameEditors(editors: number[]) {
