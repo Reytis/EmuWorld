@@ -7,9 +7,8 @@ export const SettingsPage = () => {
 
     return <div className="settings page">
       <h1>Settings</h1>
-      <CTA>Open saves directories <Open /></CTA>
 
-      <h3>My Saved Games:</h3>
+      <h3>My Games:</h3>
       <GameLibrary />
     </div> 
 }

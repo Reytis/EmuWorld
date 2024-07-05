@@ -9,6 +9,7 @@ export const Add = () => {
     const [directories, setDirectories] = useState<string[]>([]);
     const [files, setFiles] = useState<{ [key: string]: string[] }>({});
     const [devices, setDevice] = useState(["nintendo Switch", "Nintendo 3DS", "Nintendo DS", "Wii"])
+    const [saves, setSaves] = useState(["D:\\Wii\\saves","D:\\Switch\\saves","D:\\DS\\saves","D:\\3DS\\saves"])
 
 
     // directory to display 
@@ -68,6 +69,9 @@ export const Add = () => {
     const handleAddDevice = () => {
         setDevice([...devices, "new device"])
     }
+    const handleAddSaveLocation = () => {
+      setSaves([...saves, "new saves"])
+    }
     
     return <div className="adding page">
     <h1>My Repertories :</h1>
@@ -77,7 +81,7 @@ export const Add = () => {
       directories.map((dir) => (
         <li key={dir}>
           {dir}
-          <Switch options={[<Open />, <Edit />, <Remove />]} current={10} />
+          <Switch options={[<Open />, <Edit />, <Remove />]} current={10} onClick={() => {}} />
         </li>
       ))}
     </ul>
@@ -87,7 +91,17 @@ export const Add = () => {
       devices.map((d) => (
         <li key={d}>
           {d}
-          <Switch options={[<Open />, <Edit />, <Remove />]} current={10} />
+          <Switch options={[<Open />, <Edit />, <Remove />]} current={10} onClick={() => {}} />
+        </li>
+      ))}
+    </ul>
+    <h1>My Saves :</h1>
+    <ul>
+      {// list all directory for user confirmation
+      saves.map((s) => (
+        <li key={s}>
+          {s}
+          <Switch options={[<Open />, <Edit />, <Remove />]} current={10} onClick={() => {}} />
         </li>
       ))}
     </ul>
@@ -95,6 +109,7 @@ export const Add = () => {
     <div className="adding_cta">
         <CTA onClick={handleAddDirectory}>New Repertory<Cross /></CTA>
         <CTA onClick={handleAddDevice}>New Device<Cross /></CTA>
+        <CTA onClick={handleAddDevice}>New Save Location<Cross /></CTA>
     </div>
   </div>
 }

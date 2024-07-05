@@ -45,33 +45,51 @@ export const GameLibrary = () => {
     //handle filtering by genres
     const handleFilteringByGenre = () => {
         const games = getAllLocalStorageGames()
-        let filteredGames: Object[] = []
+        let filteredGames: string[] = []
         console.log(games[0])
         games.forEach(g => {
             let genre: string[] = g.datas.genres
             genres.forEach(ge => {
-                if (genre.includes(ge) && !filteredGames.includes(g)) {
+                if (genre.includes(ge) && !filteredGames.includes(g.game)) {
                     filteredGames.push(g.game)
                 }
             })
         })
-
+        
         return filteredGames
     }
 
+    // Combine filtered files from all directories
+    const getFilteredFiles = () => {
+        let filteredFiles: { [key: string]: string[] } = {};
+        const filteredGames = handleFilteringByGenre();
+
+        directories.forEach((dir) => {
+            filteredFiles[dir] = files[dir]?.filter(file => {
+                const isGame = !file.endsWith('.sav');
+                const isFilteredGame = genres.length === 0 || filteredGames.includes(file);
+                return isGame && isFilteredGame;
+            }) || [];
+        });
+
+        return filteredFiles;
+    }
+
+    const filteredFiles = getFilteredFiles();
+
     return <div className="game_library">
+        {genres}
         <FilterBar viewDisplayed={view} onViewChange={setView} onGenresChange={SetGenres} />
         <div className={view === 0 ? 'game_container' : 'game_container_list'}>
             {directories.map((dir) => (
-                files[dir]
-                ?.filter((file) => genres.length > 0 ? 
-                !file.endsWith('.sav') && handleFilteringByGenre().includes(file) : 
-                !file.endsWith('.sav'))// make sure file is a game not a save if saves file are in same folder
-                .map((file, index) => (
-                    <button className={view === 0 ? 'game_cell' : 'game_cell_list'} key={index} onClick={() => handleOpenFile(`${dir}/${file}`)}>
-                    {view === 0 ? <GameCell gameName={file} /> : <GameCellList gameName={file} />}
+                filteredFiles[dir]?.map((file, index) => (
+                    <button
+                        className={view === 0 ? 'game_cell' : 'game_cell_list'}
+                        key={`${dir}-${file}-${index}`}
+                        onClick={() => handleOpenFile(`${dir}/${file}`)}>
+                        {view === 0 ? <GameCell gameName={file} /> : <GameCellList gameName={file} />}
                     </button>
-                ))           
+                ))
             ))}
         </div>
     </div>

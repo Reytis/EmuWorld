@@ -94,14 +94,14 @@ button:focus {
 .game_container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 12px;
 }
 
 .game_cell {
-  flex: 1 1 160px; 
-  min-width: 160px; 
-  min-height: 160px;
+  flex: 1 1 200px; 
+  min-width: 200px; 
+  min-height: 200px;
   aspect-ratio: 1/1;
   padding-top: 0;
 }

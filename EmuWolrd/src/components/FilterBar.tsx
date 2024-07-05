@@ -27,7 +27,7 @@ export const FilterBar = ({viewDisplayed, onViewChange, onGenresChange}: FilterP
     return <div className="filter_bar">
         <div className="filters">
             <h3>Game Filter By:</h3>
-            <FilterInput options={["NDS", "3DS", "Wii", "Switch"]} type={"Device"} onSelectionCHange={handleSelectGenres} />
+            <FilterInput options={["NDS", "3DS", "Wii", "Switch"]} type={"Device"} onSelectionCHange={() => {}} />
             <FilterInput options={genres} type={"Genre"} onSelectionCHange={handleSelectGenres} />
             <Checkbox label={"Only Favoris"} />
             <TextInput placeHolder={'Search'}><Search /></TextInput>
