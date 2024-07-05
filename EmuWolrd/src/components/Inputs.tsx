@@ -4,9 +4,10 @@ import { ReactElement, useEffect, useRef, useState } from "react"
 
 type FilterInputProps = {
     options: string[],
-    type: string
+    type: string,
+    onSelectionCHange: Function
 }
-export const FilterInput = ({options, type}: FilterInputProps) => {
+export const FilterInput = ({options, type, onSelectionCHange}: FilterInputProps) => {
     const [showOpt, setShowOpt] = useState(false)
     const [selectedOptions, setSelectedOptions] = useState<boolean[]>(Array(options.length).fill(false));
     const containerRef = useRef<HTMLDivElement>(null);
@@ -15,6 +16,14 @@ export const FilterInput = ({options, type}: FilterInputProps) => {
         const newSelectedOptions = [...selectedOptions];
         newSelectedOptions[index] = !newSelectedOptions[index];
         setSelectedOptions(newSelectedOptions);
+        
+        let opt:string[] = []
+        for (let i = 0; i < options.length; i++) {
+            newSelectedOptions[i] === true ?
+            opt = [options[i], ...opt] :
+            opt = opt 
+        }
+        onSelectionCHange(opt)
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -63,7 +72,7 @@ export const Checkbox = ({label}: checkboxProps) => {
 
     return <div className="checkbox" onClick={() => setChecked(!checked)}>
         <label>{label}</label>
-        <input type="checkbox" checked={checked} />
+        <input type="checkbox" checked={checked} onChange={() => {console.log("checked update")}} />
     </div>
 }
 

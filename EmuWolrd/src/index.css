@@ -114,15 +114,30 @@ button:focus {
 }
 h2 {
   margin: 0;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 400;
 }
 .game_datas {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 
   padding: 4px 2px;
+}
+.star {
+  background: var(--bg);
+  padding: 4px;
+  position: absolute;
+  top: 4px;
+  right: 0px;
+  width: 24px;
+  height: 24px;
+  transition: all .25s;
+}
+
+button:hover .star {
+  background: var(--bg-light);
 }
 
 ul {
@@ -334,6 +349,7 @@ input[type="checkbox"]:checked::before {
 
 .selector_options {
   position: absolute;
+  z-index: 5;
   overflow: hidden;
   top: 100%;
   min-width: 150px;

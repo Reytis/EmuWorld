@@ -42,7 +42,7 @@ export const GameCell = ({gameName}:GameComponentProps) => {
           /> // handle UI for missing img if game found without
           }
           <div className="game_datas">
-            <h2>{truncateText(gameInfo.name, 12)}</h2>
+            <h2>{truncateText(gameInfo.name, 16)}</h2>
             <Star />  
           </div>
         </div>

@@ -214,6 +214,7 @@ export const clearGameFileName = (fileName: string) => {
     fileName = fileName.replace(/\.[^.]+$/, '')
     fileName = fileName.replace('Decrypted', '')
     fileName = fileName.replace('random', '')
+    fileName = fileName.replace('-', '')
 
     return fileName
 }
@@ -224,4 +225,20 @@ export const truncateText = (text:string, maxlenght:number) => {
         return text
     }
     return text.substring(0, maxlenght - 3) + '...'
+}
+
+//Get list of all keys in localStorage
+export const getAllLocalStorageGames = () => {
+    let values = [],
+        keys = Object.keys(localStorage),
+        i = keys.length;
+
+    while ( i-- ) {
+        const datas = localStorage.getItem(keys[i])
+        if (keys[i] !== 'genres') {
+           values.push({game: keys[i], datas: datas ? JSON.parse(datas) : "no data"}); 
+        }
+    }
+
+    return values;
 }
