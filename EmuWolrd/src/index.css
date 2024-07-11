@@ -129,11 +129,16 @@ h2 {
   background: var(--bg);
   padding: 4px;
   position: absolute;
+  z-index: 3;
   top: 4px;
   right: 0px;
   width: 24px;
   height: 24px;
   transition: all .25s;
+}
+.star:hover path {
+  fill: var(--warning);
+  transition: all .25s ease;
 }
 
 button:hover .star {

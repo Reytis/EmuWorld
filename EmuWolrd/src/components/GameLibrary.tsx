@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FilterBar } from "./FilterBar"
 import { GameCell, GameCellList } from "./GameCell"
-import { getAllLocalStorageGames } from "@/functions";
+import { clearGameFileName, getAllLocalStorageGames } from "@/functions";
 
 export const GameLibrary = () => {
     const [directories, setDirectories] = useState<string[]>([]);
@@ -61,19 +61,33 @@ export const GameLibrary = () => {
 
     // Combine filtered files from all directories
     const getFilteredFiles = () => {
-        let filteredFiles: { [key: string]: string[] } = {};
+        let filteredFiles: { name: string, displayedName: string, dir: string }[] = [];
         const filteredGames = handleFilteringByGenre();
 
         directories.forEach((dir) => {
-            filteredFiles[dir] = files[dir]?.filter(file => {
+            const filteredDirFiles = files[dir]?.filter(file => {
                 const isGame = !file.endsWith('.sav');
                 const isFilteredGame = genres.length === 0 || filteredGames.includes(file);
                 return isGame && isFilteredGame;
             }) || [];
+
+            filteredDirFiles.forEach(file => {
+                let LocalStored = localStorage.getItem(clearGameFileName(file))
+                let GameName = clearGameFileName(file)
+                if (LocalStored) {
+                    GameName = JSON.parse(LocalStored).name
+                }
+                
+                filteredFiles.push({ name: clearGameFileName(file), displayedName: GameName, dir });
+            });
         });
 
+        filteredFiles.sort((a,b) => a.displayedName.localeCompare(b.displayedName))
+
+        console.log(filteredFiles, "filteredFiles");
+
         return filteredFiles;
-    }
+    };
 
     const filteredFiles = getFilteredFiles();
 
@@ -81,15 +95,14 @@ export const GameLibrary = () => {
         {genres}
         <FilterBar viewDisplayed={view} onViewChange={setView} onGenresChange={SetGenres} />
         <div className={view === 0 ? 'game_container' : 'game_container_list'}>
-            {directories.map((dir) => (
-                filteredFiles[dir]?.map((file, index) => (
-                    <button
-                        className={view === 0 ? 'game_cell' : 'game_cell_list'}
-                        key={`${dir}-${file}-${index}`}
-                        onClick={() => handleOpenFile(`${dir}/${file}`)}>
-                        {view === 0 ? <GameCell gameName={file} /> : <GameCellList gameName={file} />}
-                    </button>
-                ))
+            {filteredFiles.map((fileObj, index) => (
+                <button
+                    className={view === 0 ? 'game_cell' : 'game_cell_list'}
+                    key={`${fileObj.dir}-${fileObj.name}-${index}`}
+                    onClick={() => handleOpenFile(`${fileObj.dir}/${fileObj.name}`)}
+                >
+                    {view === 0 ? <GameCell gameName={fileObj.name} /> : <GameCellList gameName={fileObj.name} />}
+                </button>
             ))}
         </div>
     </div>

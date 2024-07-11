@@ -197,7 +197,6 @@ export async function getCompleteGameInfo(gameName: string) {
         // Store the final object in local storage
         localStorage.setItem(gameName, JSON.stringify(completeGameInfo));
 
-        console.log(completeGameInfo);
         return completeGameInfo;
 
     } catch (error) {
@@ -215,6 +214,7 @@ export const clearGameFileName = (fileName: string) => {
     fileName = fileName.replace('Decrypted', '')
     fileName = fileName.replace('random', '')
     fileName = fileName.replace('-', '')
+    fileName = fileName.trimStart()
 
     return fileName
 }
