@@ -1,4 +1,4 @@
-import { Open } from "@/Icons"
+import { Open, Warning } from "@/Icons"
 import { CTA } from "@/components/CTA"
 import { GameLibrary } from "@/components/GameLibrary"
 
@@ -7,9 +7,8 @@ export const SettingsPage = () => {
 
     return <div className="settings page">
       <h1>Settings</h1>
-
-      <h3>My Games:</h3>
-      <GameLibrary />
+        <p className="error"><Warning /> Nothing Yet</p>
+        <GameLibrary />
     </div> 
 }
 

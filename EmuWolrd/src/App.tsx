@@ -13,13 +13,16 @@ declare global {
       listFiles: (dirPath: string) => Promise<string[]>;
       getDirectories: () => Promise<string[]>;
       addDirectory: (dirPath: string) => Promise<string[]>;
+      addSaveDirectory: (dirPath: string) => Promise<string[]>;
       removeDirectory: (dirPath: string) => Promise<string[]>;
+      removeSaveDirectory: (dirPath: string) => Promise<string[]>;
       chooseDirectory: () => any;
+      openDirectory: (dirPath: string) => any
     };
   }
 }
 function App() {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(3);
 
   return <>
     <Menu current={selected} changeCurrent={(n:number) => setSelected(n)} />

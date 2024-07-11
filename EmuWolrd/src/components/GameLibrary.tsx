@@ -46,7 +46,6 @@ export const GameLibrary = () => {
     const handleFilteringByGenre = () => {
         const games = getAllLocalStorageGames()
         let filteredGames: string[] = []
-        console.log(games[0])
         games.forEach(g => {
             let genre: string[] = g.datas.genres
             genres.forEach(ge => {
@@ -72,19 +71,17 @@ export const GameLibrary = () => {
             }) || [];
 
             filteredDirFiles.forEach(file => {
-                let LocalStored = localStorage.getItem(clearGameFileName(file))
+                let LocalStored = localStorage.getItem(file)
                 let GameName = clearGameFileName(file)
                 if (LocalStored) {
                     GameName = JSON.parse(LocalStored).name
                 }
                 
-                filteredFiles.push({ name: clearGameFileName(file), displayedName: GameName, dir });
+                filteredFiles.push({ name: file, displayedName: GameName, dir });
             });
         });
 
         filteredFiles.sort((a,b) => a.displayedName.localeCompare(b.displayedName))
-
-        console.log(filteredFiles, "filteredFiles");
 
         return filteredFiles;
     };

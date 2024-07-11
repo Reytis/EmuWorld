@@ -7,8 +7,11 @@ contextBridge.exposeInMainWorld('EmulatorOpener', {
   listFiles: (dirPath) => ipcRenderer.invoke('list-files', dirPath),
   getDirectories: () => ipcRenderer.invoke('get-directories'),
   addDirectory: (dirPath) => ipcRenderer.invoke('add-directory', dirPath),
+  addSaveDirectory: (dirPath) => ipcRenderer.invoke('add-save-directory', dirPath),
   removeDirectory: (dirPath) => ipcRenderer.invoke('remove-directory', dirPath),
+  removeSaveDirectory: (dirPath) => ipcRenderer.invoke('remove-save-directory', dirPath),
   chooseDirectory: () => ipcRenderer.invoke('choose-directory'),
+  openDirectory: (dirPath) => ipcRenderer.invoke('open-directory', dirPath)
 });
 
 //verify that preload is load

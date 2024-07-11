@@ -141,6 +141,31 @@ h2 {
   transition: all .25s ease;
 }
 
+.warning, .error {
+  padding: 12px;
+  margin: 16px;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+
+  background: var(--warning);
+  color: var(--bg);
+
+  font-size: 20px;
+  font-weight: 900;
+}
+.warning .icons, .error .icons {
+  width: 32px;
+  height: 32px;
+}
+.warning .icons path, .error .icons path {
+  fill: var(--bg)
+}
+.error {
+  background: var(--error);
+}
+
 button:hover .star {
   background: var(--bg-light);
 }
@@ -397,7 +422,7 @@ input[type="checkbox"]:checked::before {
   border-bottom: 2px solid transparent;
 }
 
-.switch {
+.switch, .list_opt {
   width: fit-content;
   cursor: pointer;
   display: flex;
@@ -407,7 +432,7 @@ input[type="checkbox"]:checked::before {
   border: 2px solid var(--text);
   overflow: hidden;
 }
-.switch_options {
+.switch_options, .list_opt_button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -417,15 +442,28 @@ input[type="checkbox"]:checked::before {
 
   transition: all .15s ease;
 }
-.switch_options:hover {
+.list_opt_button {
+  border-left: 1px solid var(--text);
+  border-right: 1px solid var(--text);
+}
+.list_opt_button:first-of-type {
+  border-left: 1px solid transparent;
+}
+.list_opt_button:last-of-type {
+  border-right: 1px solid transparent;
+}
+.switch_options:hover, .list_opt_button:hover {
   border-left: 2px solid var(--text);
   border-right: 2px solid var(--text);
   background: var(--bg-light);
 }
-.switch_options:first-of-type:hover {
+.list_opt_button:hover {
+  background: var(--primary);
+}
+.switch_options:first-of-type:hover, .list_opt_button:first-of-type:hover {
   border-left: 2px solid transparent;
 }
-.switch_options:last-of-type:hover {
+.switch_options:last-of-type:hover, .list_opt_button:last-of-type:hover {
   border-right: 2px solid transparent;
 }
 .switch_options.selected {
@@ -448,7 +486,7 @@ input[type="checkbox"]:checked::before {
 }
 
 
-.switch_options .icons {
+.switch_options .icons, .list_opt_button .icons {
   width: 24px;
   height: 24px;
 }

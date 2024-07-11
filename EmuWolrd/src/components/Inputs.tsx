@@ -110,6 +110,15 @@ export const Switch = ({options, current, onClick}: SwitchProps) => {
     </div>
 }
 
+type ListOptButtonProps = {
+    options: ReactElement,
+    onClick: Function,
+    onClickAsync?: () => Promise<void>
+}
+export const ListOptButton = ({options, onClick, onClickAsync}: ListOptButtonProps) => {
+    return <div className="list_opt_button" onClick={onClickAsync ? onClickAsync : onClick()}>{options}</div>
+}
+
 export const Opener = () => {
 
     return <input type="file" /> 
