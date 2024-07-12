@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-
-//Manege list for different IPC event
+// Manage list for different IPC events
 contextBridge.exposeInMainWorld('EmulatorOpener', {
   openFile: (filePath) => ipcRenderer.send('open-file', filePath),
   listFiles: (dirPath) => ipcRenderer.invoke('list-files', dirPath),
@@ -11,8 +10,14 @@ contextBridge.exposeInMainWorld('EmulatorOpener', {
   removeDirectory: (dirPath) => ipcRenderer.invoke('remove-directory', dirPath),
   removeSaveDirectory: (dirPath) => ipcRenderer.invoke('remove-save-directory', dirPath),
   chooseDirectory: () => ipcRenderer.invoke('choose-directory'),
-  openDirectory: (dirPath) => ipcRenderer.invoke('open-directory', dirPath)
+  openDirectory: (dirPath) => ipcRenderer.invoke('open-directory', dirPath),
 });
 
-//verify that preload is load
+ipcRenderer.on('proxy-log', (event, message) => {
+  console.log(message);
+  const logElement = document.getElementById('log-output');
+  logElement.textContent += message + '\n';
+});
+
+// Verify that preload is loaded
 console.log("preload.js loaded");

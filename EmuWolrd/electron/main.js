@@ -3,53 +3,73 @@ import {exec, spawn} from 'child_process'
 import fs from 'fs-extra'
 import path from "path"
 import url from 'url'
+import log from 'electron-log'
+import isDev from 'electron-is-dev';
 
 const DirectoriesJSON = path.join('directories.json');
 const SavesDirectoriesJSON = path.join('save_directories.json');
 
-const currentDir = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+
+log.transports.console.level = 'debug';
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     autoHideMenuBar: true,
+    icon: 'public/logo.ico',
     webPreferences: {
-      preload: path.resolve(currentDir.substring(3), 'preload.cjs'),
+      preload: path.resolve(__dirname, 'preload.cjs'),
       nodeIntegration: true,
       contextIsolation: true,
     },
   });
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
-    pathname: path.join(currentDir, '../dist/index.html'),
+    pathname: path.join(__dirname, '../dist/index.html'),
     protocol: 'file:',
     slashes: true
   });
 
   mainWindow.loadURL(startUrl);
-  //mainWindow.webContents.openDevTools();
+
+  return mainWindow;  // Return the mainWindow object for use in other functions
 }
 
+const proxyPath = isDev ? path.join(__dirname, 'proxy.js') : path.join(__dirname, 'proxy.js').replace('app.asar', 'app.asar.unpacked')
+
 app.on('ready', () => {
-  // Créez la fenêtre principale
-  createWindow();
+  const mainWindow = createWindow();
 
-  // Lancer proxy.js en tant que processus enfant
-  const proxyProcess = spawn('node', ['./electron/proxy.js']);
+  // Launch proxy.js as a child process
+  const proxyProcess = spawn('node', [proxyPath]);
 
-  // Gérez les événements liés au processus proxy.js
+  // Handle events related to the proxy.js process
   proxyProcess.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
+    log.info(`stdout: ${data}`);
+    mainWindow.webContents.send('proxy-log', data.toString()); // Send log to renderer
   });
 
   proxyProcess.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
+    log.error(`stderr: ${data}`);
+    mainWindow.webContents.send('proxy-log', `ERROR: ${data.toString()}`); // Send error to renderer
   });
 
   proxyProcess.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
+    log.info(`child process exited with code ${code}`);
+    mainWindow.webContents.send('proxy-log', `Proxy process exited with code ${code}`);
   });
+
+  // Notify renderer that proxy is running
+  log.info('proxy-status', 'Proxy process started successfully')
+  mainWindow.webContents.send('proxy-status', 'Proxy process started successfully');
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
 app.on('window-all-closed', () => {

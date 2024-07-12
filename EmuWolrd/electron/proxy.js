@@ -8,7 +8,11 @@ const API_KEY = 'pp64muquz7qralwxkppswl49qiu8ym'; // clé API IGDB
 const API_ID = '7yuofk3njbfja2pl950sfu2sxiqoqf'; // client ID
 const BASE_URL = 'https://api.igdb.com/v4/'; // url to ask
 
-app.use(cors()) //For bypass the CORS policy
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'Client-ID'],
+  })); //For bypass the CORS policy
 
 // set up request form
 app.use((req, res, next) => {
@@ -83,3 +87,4 @@ app.use('/api/release', createProxyMiddleware({
 app.listen(PORT, () => {
     console.log(`Proxy server is running on port ${PORT}`)
 })
+console.log("proxy running")

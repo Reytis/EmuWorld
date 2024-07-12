@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu } from './components/Menu';
 import { HomePage } from './pages/Home';
 import { Add } from './pages/Add';
@@ -17,21 +17,25 @@ declare global {
       removeDirectory: (dirPath: string) => Promise<string[]>;
       removeSaveDirectory: (dirPath: string) => Promise<string[]>;
       chooseDirectory: () => any;
-      openDirectory: (dirPath: string) => any
+      openDirectory: (dirPath: string) => any;
     };
   }
 }
-function App() {
-  const [selected, setSelected] = useState(3);
 
-  return <>
-    <Menu current={selected} changeCurrent={(n:number) => setSelected(n)} />
-    {selected === 0 && <HomePage />}
-    {selected === 1 && <Controls />}
-    {selected === 2 && <Library />}
-    {selected === 3 && <Add />}
-    {selected === 4 && <SettingsPage />}
+
+function App() {
+  const [selected, setSelected] = useState(0);
+
+  return (
+    <>
+      <Menu current={selected} changeCurrent={(n: number) => setSelected(n)} />
+      {selected === 0 && <HomePage />}
+      {selected === 1 && <Controls />}
+      {selected === 2 && <Library />}
+      {selected === 3 && <Add />}
+      {selected === 4 && <SettingsPage />}
     </>
+  );
 }
 
 export default App
